@@ -3,12 +3,14 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Signin from "./components/user/Signin";
 import Signup from "./components/user/Signup";
 import Home from "./core/Home";
+import Menu from "./core/Menu";
 const Routers = () => {
   return (
     <BrowserRouter>
+    <Menu/>
       <Switch>
-        <Route exact path="/singin" component={Signin} />
-        <Route exact path="/singup" component={Signup} />
+        <Route exact path="/signin" component={Signin} />
+        <Route exact path="/signup" component={Signup} />
         <Route exact path="/" component={Home} />
       </Switch>
     </BrowserRouter>
