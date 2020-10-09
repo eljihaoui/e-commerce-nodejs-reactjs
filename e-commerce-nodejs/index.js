@@ -13,7 +13,7 @@ const productRoutes = require("./routes/productRoutes");
 const app = express(); // methode
 require("dotenv").config();
 
-// Database mongodb
+// Database mongodb Connection
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true, // pour ne pas afficher les messages dans le log
