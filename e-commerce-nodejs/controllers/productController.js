@@ -6,6 +6,7 @@ const joi = require("joi");
 
 /****************** function create product ******************** */
 exports.createProduct = (req, res) => {
+
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
 
@@ -17,6 +18,8 @@ exports.createProduct = (req, res) => {
     }
     //1mb =1000000 = 10^6
     let product = new Product(fields);
+    console.log(form)
+    console.log("product;", product)
     if (files.photo) {
       //console.log("photo :" , files.photo);
       if (files.photo.size >= Math.pow(10, 6)) {

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { API_URL } from "../../config";
+import { API_URL ,toastrOptions} from "../../config";
 import Layout from "../../core/Layout";
-
-const Signup = () => {
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
+const Signup = (props) => {
 
   const [user, setUser] = useState({
     name: '',
@@ -24,8 +25,23 @@ const Signup = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(user)
-    }).then(res => console.log(res))
-      .catch(err => console.error(err))
+    }).then(res => res.json())
+      .then(res => {
+        // console.log("res :" ,res);
+        if (res.error) {
+          toastr.warning(res.error , 'Please check form !', toastrOptions)
+        } else if( res.name==='MongoError' ){
+          toastr.error( res.keyValue.email +'is used before', 'duplicate email', toastrOptions)
+        }else{
+          toastr.success("user is created successFully", 'New Account', toastrOptions)
+          props.history.push('/signin')
+        }
+      })
+      .catch(err => {
+        toastr.error(err, 'Server erreur ', {
+          "positionClass": "toast-bottom-center",
+        })
+      })
   }
   const form = () => (
     <form onSubmit={submitSignup}>

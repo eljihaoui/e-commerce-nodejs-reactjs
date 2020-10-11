@@ -12,6 +12,7 @@ const { userById } = require("../middleware/user-mw");
 const { categoryById } = require("../middleware/category-mw");
 const router = express.Router();
 router.get("/", allCategories);
+
 router.post(
   "/create/:userId",
   [requireSignIn, isAdmin, isAuth],

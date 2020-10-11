@@ -24,10 +24,11 @@ mongoose
   .catch((err) => console.log(err));
 
 // Middleware
+app.use(cors());
 app.use(express.json()); // convert bson en json
 app.use(expressValidator());
 app.use(cookieParser());
-app.use(cors());
+
 // Route Middleware
 app.use("/api", authRoutes);
 app.use("/api/user", userRoutes);

@@ -8,8 +8,10 @@ exports.signup = (req, res) => {
     const user = new User(req.body)
     user.save((err, user) => {
         if (err) {
-            res.status(400).send(err)
+            return res.status(400).send(err)
         }
+        user.hashed_password = undefined;
+        user.salt = undefined;
         res.send(user); // user : user after persisting 
     })
 }
@@ -17,12 +19,12 @@ exports.singin = (req, res) => {
     const { email, password } = req.body;
     User.findOne({ email: email }, (err, user) => { // si bon return user sinon return err
         if (err || !user) {
-            res.status(400).json({
+           return  res.status(400).json({
                 error: "user not found please singup"
             });
         }
         if (!user.authenticate(password)) {
-            res.status(401).json({ error: "user not authorized, email and passeword dont't match !" });// 401 not authorized
+            return  res.status(401).json({ error: "user not authorized, email and passeword dont't match !" });// 401 not authorized
         }
         // si connected then generate token with jwt json web token
         const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET);

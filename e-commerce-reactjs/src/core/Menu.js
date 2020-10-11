@@ -1,5 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { API_URL, toastrOptions } from "../config";
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
+import { isAdmin, isAuthenticated } from "../helpers/auth";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -9,6 +13,17 @@ const isActive = (history, path) => {
   }
 };
 const Menu = (props) => {
+  const signout = () => {
+    fetch(`${API_URL}/signout`)
+      .then(() => {
+        toastr.info('user sign out ', 'Connexion ....', toastrOptions)
+        localStorage.removeItem('jwt_info')
+        props.history.push('/signin')
+      })
+      .catch()
+  }
+
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-info">
@@ -28,24 +43,53 @@ const Menu = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-              <Link  style={isActive(props.history, "/")} className="nav-link" to="/">
-                Home <span className="sr-only">(current)</span>
-              </Link>
-            </li>
-            <li className="nav-item active">
-              <Link  style={isActive(props.history, "/products")} className="nav-link" to="/products">
-                Products <span className="sr-only">(current)</span>
-              </Link>
-            </li>
+
+            <Fragment>
+              <li className="nav-item active">
+                <Link style={isActive(props.history, "/")} className="nav-link" to="/">
+                  Home <span className="sr-only">(current)</span>
+                </Link>
+              </li>
+
+                <li className="nav-item active">
+                <Link
+                  style={isActive(props.history, "/admin/dashboard")}
+                  className="nav-link"
+                  to={`${(isAuthenticated() && isAdmin()) ? '/admin' : ''}/dashboard`}>
+                  Dashboard
+                  </Link>
+              </li>
+
+              <li className="nav-item active">
+                <Link style={isActive(props.history, "/products")} className="nav-link" to="/products">
+                  Products <span className="sr-only">(current)</span>
+                </Link>
+              </li>
+
+            </Fragment>
+
+
+
           </ul>
           <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link style={isActive(props.history, "/signin")}   className="nav-link"to="/signin" >Connexion </Link>
-            </li>
-            <li className="nav-item">
-              <Link style={isActive(props.history, "/signup")}  className="nav-link"  to="/signup">Register</Link>
-            </li>
+            {
+              !isAuthenticated() && (
+                <Fragment>
+                  <li className="nav-item">
+                    <Link style={isActive(props.history, "/signin")} className="nav-link" to="/signin" >Connexion </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link style={isActive(props.history, "/signup")} className="nav-link" to="/signup">Register</Link>
+                  </li>
+                </Fragment>
+              )}
+            {
+              isAuthenticated() && (
+                <li className="nav-item" style={{ cursor: 'pointer' }}>
+                  <span className="nav-link" style={isActive(props.history, "/signout")} onClick={signout}>SignOut</span>
+                </li>
+              )}
+
           </ul>
         </div>
       </nav>

@@ -6,7 +6,7 @@ const Home = () => {
       <div>
           <Layout 
           title="Home Page"
-           description="Node React Ecommerce APP" 
+           description="eCommerce APP" 
            className="container">
                <h2>Hello from layout Home Page</h2> 
                {/*children : entre les tags , il s'appele children */}
