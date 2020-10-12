@@ -6,58 +6,65 @@ const joi = require("joi");
 
 /****************** function create product ******************** */
 exports.createProduct = (req, res) => {
-
-  let form = new formidable.IncomingForm();
-  form.keepExtensions = true;
-
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      return res.status(400).json({
-        error: "image could not uploade",
-      });
-    }
-    //1mb =1000000 = 10^6
-    let product = new Product(fields);
-    console.log(form)
-    console.log("product;", product)
-    if (files.photo) {
-      //console.log("photo :" , files.photo);
-      if (files.photo.size >= Math.pow(10, 6)) {
-        return res.status(400).json({
-          error: "image should be less than 1MB in size",
-        });
-      }
-      product.photo.data = fs.readFileSync(files.photo.path);
-      product.photo.contentType = files.photo.type;
-    }
-
-    const schema = joi.object({
-      name: joi.string().required(),
-      description: joi.string().required(),
-      category: joi.string().required(),
-      price: joi.number().required(),
-      quantity: joi.number(),
-    });
-
-    console.log(fields);
-    const { error } = schema.validate(fields);
-    if (error) {
-      return res.status(400).json({
-        error: error.details[0].message,
-      });
-    }
-
-    product.save((err, product) => {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
+  try {
+      form.parse(req, (err, fields, files) => {
       if (err) {
         return res.status(400).json({
-          error: "bad request product not saved",
+          error: "image could not uploaded",
         });
       }
-      res.json({
-        product: product,
+      //1mb =1000000 = 10^6
+      let product = new Product(fields);
+      console.log(form)
+      console.log("product;", product)
+      if (files.photo) {
+        //console.log("photo :" , files.photo);
+        if (files.photo.size >= Math.pow(10, 6)) {
+          return res.status(400).json({
+            error: "image should be less than 1MB in size",
+          });
+        }
+        product.photo.data = fs.readFileSync(files.photo.path);
+        product.photo.contentType = files.photo.type;
+      }
+
+      
+      // const schema = joi.object({
+      //   name: joi.string().required(),
+      //   description: joi.string().required(),
+      //   category: joi.string().required(),
+      //   price: joi.number().required(),
+      //   quantity: joi.number()
+      // });
+
+      // console.log(fields);
+      // const { error } = schema.validate(fields);
+      // if (error) {
+      //   return res.status(400).json({
+      //     error:"ereeeeeer : " + error.details[0].message,
+      //   });
+      // }
+
+      product.save((err, product) => {
+        if (err) {
+          return res.status(400).json({
+            error: "bad request product not saved",
+          });
+        }
+        res.json({
+          product: product,
+        });
       });
     });
-  });
+
+  } catch (err) {
+
+    console.log(err)
+  }
+
+
 };
 /**********   function update Product  ****************/
 exports.updateProduct = (req, res) => {

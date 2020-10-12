@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { API_URL, toastrOptions } from '../../../config'
 import { isAuthenticated } from '../../../helpers/auth'
 import toastr from 'toastr';
@@ -16,40 +16,53 @@ function AddProduct(props) {
         shipping: false
     })
 
-    const [formData,setformData] = useState(new FormData()) // FormData : classe par defaut dans javascript ,car on va envoyer un fichier
-    // pas de setformaData car la classe possède déja ses méthodes
+    const [formData, setFormData] = useState(new FormData()) // FormData : classe par defaut dans javascript ,car on va envoyer un fichier
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => getCategories(), []) // []: au chargement de la page selement et no a chaque modifcation
+    const getCategories = () => {
+        fetch(`${API_URL}/category`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json())
+            .then(res => setCategories(res.categories))
+            .catch(err => console.log(err));
+    }
+
     const handleChange = (e) => {
         const value = (e.target.type === 'file') ? e.target.files[0] :
             (e.target.type === 'checkbox') ? e.target.checked : e.target.value;
-
-        formData.set(e.target.id, value)
         setProduct({
             ...product,
             [e.target.id]: value
         })
+        formData.set(e.target.id, value)
     }
 
     const submitProduct = (e) => {
+        console.log(formData)
         e.preventDefault();
         const { user, token } = isAuthenticated();
-
         fetch(`${API_URL}/product/create/${user._id}`, {
             method: "POST",
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify(formData) // pas obkigatoire utiliseé JSON.stringfy car l'objet est déja structuré comme json
+            body: formData
+            // pas obkigatoire utiliseé JSON.stringfy car l'objet est déja structuré comme json
         })
             .then(res => res.json())
             .then(res => {
                 if (res.error) {
                     toastr.warning(res.error, 'Please check form !', toastrOptions)
                 } else if (res.name === 'MongoError') {
-                    toastr.error('Category not saved in database ', 'save category', toastrOptions)
+                    toastr.error('Product not saved in database ', 'Save Product', toastrOptions)
                 } else {
-                    toastr.success(`category ${product.name} created successFully`, 'New Category', toastrOptions)
+                    toastr.success(`Product ${product.name} created successFully`, 'New Product', toastrOptions)
                     setProduct({
                         photo: '',
                         name: '',
@@ -59,7 +72,7 @@ function AddProduct(props) {
                         category: 0,
                         shipping: false
                     })
-                    setformData(new formData())
+                    setFormData(new FormData())
                     // props.history.push('/signin')
                 }
             }).catch(err => {
@@ -95,7 +108,13 @@ function AddProduct(props) {
                 <label htmlFor="category">category  </label>
                 <select required onChange={handleChange} value={product.category} name="category" id="category" className="form-control" >
                     <option value="0">---</option>
-                    <option value="5f7cfa340f3401239067915f">DEV WEB</option>
+                    {
+                        categories && (
+                            categories.map((category, i) => (
+                                <option key={i} value={category._id}>{category.name}</option>
+                            ))
+                            )
+                    }
                 </select>
             </div>
             <div className="form-check">
