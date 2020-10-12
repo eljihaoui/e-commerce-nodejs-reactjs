@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
-import Layout from '../../core/Layout'
+import Layout from '../../../core/Layout';
+
 
 const Product = () => {
     return (

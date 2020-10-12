@@ -21,3 +21,6 @@ button{
     border-radius: 8px;
     text-align: justify;
 }
+#FilterByCategoory ul li:hover{
+    background-color:gainsboro;
+}

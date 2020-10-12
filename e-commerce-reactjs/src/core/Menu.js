@@ -50,7 +50,11 @@ const Menu = (props) => {
                   Home <span className="sr-only">(current)</span>
                 </Link>
               </li>
-
+              <li className="nav-item active">
+                <Link style={isActive(props.history, "/shop")} className="nav-link" to="/shop">
+                  Shopping <span className="sr-only">(current)</span>
+                </Link>
+              </li>
                 <li className="nav-item active">
                 <Link
                   style={isActive(props.history, "/admin/dashboard")}
