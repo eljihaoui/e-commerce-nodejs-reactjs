@@ -130,7 +130,7 @@ function AddProduct(props) {
         <div>
             <Layout
                 title=""
-                description="New New Product"
+                description="New Product"
                 className="container">
                 <div className="row">
                     <div className="col-md-6 mx-auto">

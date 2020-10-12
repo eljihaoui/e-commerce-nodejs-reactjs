@@ -1,9 +1,23 @@
 .card-title{
-    font-size: 18 !important;
-    font-weight: bold;
-    color: indigo;
+    font-size: 14 !important;
+    font-weight: bold !important;
+    color: indigo !important;
 
 }
 body{
     font-family: 'Century Gothic' !important;
+}
+button{
+    font-weight: bold !important;
+}
+.titre{
+    font-size: 14 !important;
+    font-weight: bold !important;
+    color: maroon !important;
+}
+.card{
+    height: 350px ;
+    border:solid 1px indigo;
+    border-radius: 8px;
+    text-align: justify;
 }

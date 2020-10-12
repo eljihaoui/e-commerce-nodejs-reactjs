@@ -46,8 +46,9 @@ const Dashboard = () => {
             <div class="card">
                 <div class="card-body">
                     <div class="card-title alert alert-info p-2">
-                        <div class="material-icons" style={{ position: 'relative', top: 5 }}>people_alt</div>   User history
-                </div>
+                        <div class="material-icons" style={{ position: 'relative', top: 5 }}>people_alt </div>
+                        User history
+                    </div>
                     <ul className='list-group list-group-flush'>
                         <li className="list-group-item">history</li>
 
@@ -72,7 +73,7 @@ const Dashboard = () => {
 
                     <div className="col-md-9">
                         {userInfo()}
-                        <hr/>
+                        <hr />
                         {userPurshaseHistory()}
                     </div>
 
