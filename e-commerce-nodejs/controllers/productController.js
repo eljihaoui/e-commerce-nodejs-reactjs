@@ -186,7 +186,7 @@ exports.relatedProduct = (req, res) => {
 exports.searchProduuct = (req, res) => {
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
   let order = req.query.order ? req.query.order : "asc";
-  let limit = req.query.limit ? parseInt(req.query.limit) : 10;
+  let limit = req.body.limit ? parseInt(req.body.limit) : 10;
   let skip = parseInt(req.body.skip);
   let findArgs = {};
 

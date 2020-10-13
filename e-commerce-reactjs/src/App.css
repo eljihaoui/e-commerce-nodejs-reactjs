@@ -16,10 +16,10 @@ button{
     color: maroon !important;
 }
 .card{
-    height: 350px ;
+    height: 380px ;
     border:solid 1px indigo;
     border-radius: 8px;
-    text-align: justify;
+    text-align: start;
 }
 #FilterByCategoory ul li:hover{
     background-color:gainsboro;

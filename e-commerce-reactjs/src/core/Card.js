@@ -5,28 +5,30 @@ import ShowPhoto from './ShowPhoto'
 const Card = ({ product }) => {
     return (
         <div>
-            <div class="card m-2">
-
-                <div class="card-body">
+            <div className="card  m-2" style={{backgroundColor:'#fff7e6'}}>
+                <div className="card-body">
                     <p>
-                        <span className="material-icons" style={{ position: 'relative', top: 7 }}>keyboard_arrow_right</span>
-                        <span style={{ fontWeight: 'bold', color: 'indigo' }}>{product.name}</span>
+                        <div style={{ fontWeight: 'bold', color: 'indigo', textAlign: 'left' }}>
+                            <span className="material-icons" style={{ position: 'relative', top: 7 }}>keyboard_arrow_right</span>
+                            {product.name}
+                        </div>
                     </p>
                     <div className="row">
                         <div className="col-md-6">
                             <ShowPhoto item={product} url="product/photo" className="img-thumbnail"></ShowPhoto>
-                            <span class="card-text text-left" style={{ color: "red", fontWeight: "bold",fontSize:'14px' }}>Price : ${product.price}</span> <br/>
-                            <span class="card-text text-left" style={{ color: "indigo", fontWeight: "bold",fontSize:'12px' }}>Qunatity stock : ${product.quantity}</span>
+                            <span className="badge badge-primary">Price : ${product.price}</span> <br />
+                            <span className="badge badge-info">Qunatity stock : ${product.quantity}</span>
 
                         </div>
                         <div className="col-md-6">
-                            <p class="card-text">{product.description.substring(0, 150) + ' ...'}</p>
+                            <div className="badge badge-secondary my-2 mx-auto" style={{ width: "100%" }}>- {product.category.name}</div>
+                            <p className="card-text">{product.description.substring(0, 150) + ' ...'}</p>
                         </div>
                     </div>
 
                     <div style={{ position: 'absolute', bottom: 4 }}>
                         <Link to="">
-                            <button className="btn btn-warning mr-2">View Product</button>
+                            <button className="btn btn-warning  badge-warning mr-2">View Product</button>
                         </Link>
                         <Link to="">
                             <button className="btn btn-success">Add to Cart</button>

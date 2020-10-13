@@ -1,15 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import { getCategories } from './ApiCore'
-import FilterByCategory from './FilterByCategory'
-import Layout from './Layout'
+import React, { useState, useEffect } from 'react';
+import { getCategories, searchProducts } from './ApiCore';
+import Card from './Card';
+import FilterByCategory from './FilterByCategory';
+import FilterByPrice from './FilterByPrice';
+import Layout from './Layout';
 
 const Shop = () => {
 
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [limit, setLimit] = useState(6);
+    const [skip, setSkip] = useState(0);
+    const [productsFiltred, setProductsFiltred] = useState([]);
+
+    const [myFilters, setMyFilters] = useState({
+        category: [],
+        price: [] // min ,max
+    });
+
     useEffect(() => {
         getCategories()
-            .then(res => setCategories(res));
-    }, []) // s'exécute à chaque chargement du compoenent
+            .then(res => setCategories(res))
+
+        searchProducts(skip, limit, myFilters)
+            .then(res => setProductsFiltred(res))
+    }, [myFilters]) // s'exécute  chaque modif myFilters
+    const handleFilters = (data, filterBy) => {
+        setMyFilters({
+            ...myFilters,
+            [filterBy]: data
+        });
+        //console.log(myFilters);
+    }
 
     return (
         <div>
@@ -19,10 +40,29 @@ const Shop = () => {
                 className="container">
                 <div className="row">
                     <div className="col-md-3">
-                      <FilterByCategory categories={categories}></FilterByCategory>              
-                           </div>
+                        <FilterByCategory
+                            categories={categories}
+                            handleFilters={(data) => handleFilters(data, 'category')}
+                        />
+                        <hr />
+                        <FilterByPrice handleFilters={(data) => handleFilters(data, 'price')} />
+
+                    </div>
                     <div className="col-md-9">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate quibusdam nam hic reiciendis aspernatur harum, explicabo, enim accusantium possimus culpa accusamus illum sapiente nostrum, quae laudantium repellat minima fuga obcaecati!</p>
+                        {
+                        productsFiltred.length > 0 && (
+                            `Products Count : ${productsFiltred.length}`
+                        )
+                        }
+                        <div className="row mt-3 mb-50">
+                            {
+                                productsFiltred.map((product, i) => (
+                                    <div key={product._id} className="col-md-6">
+                                        <Card product={product} key={i} />
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </div>
                 </div>
             </Layout>
