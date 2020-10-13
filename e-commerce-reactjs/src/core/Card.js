@@ -7,12 +7,12 @@ const Card = ({ product }) => {
         <div>
             <div className="card  m-2" style={{backgroundColor:'#fff7e6'}}>
                 <div className="card-body">
-                    <p>
+                  
                         <div style={{ fontWeight: 'bold', color: 'indigo', textAlign: 'left' }}>
                             <span className="material-icons" style={{ position: 'relative', top: 7 }}>keyboard_arrow_right</span>
                             {product.name}
                         </div>
-                    </p>
+                    
                     <div className="row">
                         <div className="col-md-6">
                             <ShowPhoto item={product} url="product/photo" className="img-thumbnail"></ShowPhoto>

@@ -20,6 +20,8 @@ export const getCategories = () => {
 
 export const searchProducts = (skip,limit,filters) => {
     const data={
+        skip:skip,
+        limit:limit,
         filters:filters
     }
     return fetch(`${API_URL}/product/search`, {

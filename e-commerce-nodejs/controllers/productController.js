@@ -6,10 +6,10 @@ const joi = require("joi");
 
 /****************** function create product ******************** */
 exports.createProduct = (req, res) => {
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
+  let form = new formidable.IncomingForm();
+  form.keepExtensions = true;
   try {
-      form.parse(req, (err, fields, files) => {
+    form.parse(req, (err, fields, files) => {
       if (err) {
         return res.status(400).json({
           error: "image could not uploaded",
@@ -17,8 +17,8 @@ exports.createProduct = (req, res) => {
       }
       //1mb =1000000 = 10^6
       let product = new Product(fields);
-      console.log(form)
-      console.log("product;", product)
+      // console.log(form)
+      // console.log("product;", product)
       if (files.photo) {
         //console.log("photo :" , files.photo);
         if (files.photo.size >= Math.pow(10, 6)) {
@@ -30,7 +30,7 @@ exports.createProduct = (req, res) => {
         product.photo.contentType = files.photo.type;
       }
 
-      
+
       // const schema = joi.object({
       //   name: joi.string().required(),
       //   description: joi.string().required(),
@@ -98,7 +98,7 @@ exports.updateProduct = (req, res) => {
       quantity: joi.number(),
     });
 
-    console.log(fields);
+    //console.log(fields);
     const { error } = schema.validate(fields);
     if (error) {
       return res.status(400).json({
@@ -189,6 +189,7 @@ exports.searchProduuct = (req, res) => {
   let limit = req.body.limit ? parseInt(req.body.limit) : 10;
   let skip = parseInt(req.body.skip);
   let findArgs = {};
+  console.log('===>', skip,limit);
 
   for (let key in req.body.filters) {
     if (req.body.filters[key].length > 0) {
@@ -202,7 +203,7 @@ exports.searchProduuct = (req, res) => {
       }
     }
   }
-  console.log(findArgs);
+  //console.log(findArgs);
   Product.find(findArgs)
     .select("-photo") // ne pas charger la photo
     .populate("category", "name createdAt") // charge libe categ
