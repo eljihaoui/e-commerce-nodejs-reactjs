@@ -92,6 +92,7 @@ const Shop = () => {
                                 ))
                             }
                         </div>
+                        <hr/>
                         {btnToLoadMore()}
                     </div>
                 </div>

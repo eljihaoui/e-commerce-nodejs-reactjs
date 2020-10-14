@@ -127,6 +127,9 @@ exports.showProduct = (req, res) => {
   });
 };
 
+
+/********************* function remove product  */
+
 exports.removeProduct = (req, res) => {
   let product = req.product;
   product.remove((err, product) => {
@@ -144,7 +147,16 @@ exports.allProducts = (req, res) => {
   let order = req.query.order ? req.query.order : "asc";
   let limit = req.query.limit ? parseInt(req.query.limit) : 10;
 
-  Product.find()
+  let query = {}
+  let { search, category } = req.query;
+  if (search) {
+    query.name = { $regex: search, $options: 'i' }
+  }
+  if (category) {
+    query.category = category
+  }
+
+  Product.find(query)
     .select("-photo") // ne pas charger la photo
     .populate("category", "name createdAt") // charge libe categ
     .sort([[sortBy, order]])
@@ -162,8 +174,7 @@ exports.allProducts = (req, res) => {
 };
 exports.relatedProduct = (req, res) => {
   //$ne : not equal
-  let limit = req.query.limit ? parseInt(req.query.limit) : 10;
-
+  let limit = req.query.limit ? parseInt(req.query.limit) : 6;
   Product.find({
     category: req.product.category,
     _id: { $ne: req.product._id },
@@ -189,7 +200,7 @@ exports.searchProduuct = (req, res) => {
   let limit = req.body.limit ? parseInt(req.body.limit) : 10;
   let skip = parseInt(req.body.skip);
   let findArgs = {};
-  console.log('===>', skip,limit);
+  console.log('===>', skip, limit);
 
   for (let key in req.body.filters) {
     if (req.body.filters[key].length > 0) {

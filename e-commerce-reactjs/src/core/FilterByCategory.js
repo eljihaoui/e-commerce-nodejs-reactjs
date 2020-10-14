@@ -21,10 +21,10 @@ const FilterByCategory = ({ categories, handleFilters }) => {
                   </p>
             <ul>
                 {categories && (
-                    categories.map((catgeory, i) => (
+                    categories.map((category, i) => (
                         <li key={i} className='list-unstyled my-3' style={{ cursor: 'pointer' }} >
-                            <input onClick={() => handleCategory(catgeory)} style={{ cursor: 'pointer' }} value={catgeory._id} type="checkbox" id={i} className="form-check-input" />
-                            <label style={{ cursor: 'pointer' }} htmlFor={i} className="form-check-label mx-2" >{catgeory.name}</label>
+                            <input onClick={() => handleCategory(category)} style={{ cursor: 'pointer' }} value={category._id} type="checkbox" id={i} className="form-check-input" />
+                            <label style={{ cursor: 'pointer' }} htmlFor={i} className="form-check-label mx-2" >{category.name}</label>
                         </li>
                     ))
                 )}

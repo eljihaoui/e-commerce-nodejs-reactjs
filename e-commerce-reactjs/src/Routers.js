@@ -10,6 +10,7 @@ import Signup from "./components/user/Signup";
 import Home from "./core/Home";
 import Menu from "./core/Menu";
 import Shop from "./core/Shop";
+import SingleProduct from "./core/SingleProduct";
 import AdminRoute from "./helpers/AdminRoute";
 import PrivateRoute from "./helpers/PrivateRoute";
 const Routers = () => {
@@ -25,6 +26,8 @@ const Routers = () => {
         <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         <AdminRoute exact path="/category/create" component={AddCategory} />
         <AdminRoute exact path="/product/create" component={AddProduct} />
+        <PrivateRoute exact path="/product/:productId" component={SingleProduct} />
+
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/signin" component={Signin} />
       </Switch>
