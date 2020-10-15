@@ -7,6 +7,7 @@ import AdminDashboard from "./components/user/AdminDashboard";
 import Dashboard from "./components/user/Dashboard";
 import Signin from "./components/user/Signin";
 import Signup from "./components/user/Signup";
+import Cart from "./core/Cart";
 import Home from "./core/Home";
 import Menu from "./core/Menu";
 import Shop from "./core/Shop";
@@ -27,7 +28,7 @@ const Routers = () => {
         <AdminRoute exact path="/category/create" component={AddCategory} />
         <AdminRoute exact path="/product/create" component={AddProduct} />
         <PrivateRoute exact path="/product/:productId" component={SingleProduct} />
-
+        <Route exact path="/cart" component={Cart} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/signin" component={Signin} />
       </Switch>

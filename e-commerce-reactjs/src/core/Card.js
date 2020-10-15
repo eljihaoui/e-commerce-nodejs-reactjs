@@ -2,7 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import ShowPhoto from './ShowPhoto'
 import moment from 'moment'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../redux/actions/cartActions'
 const Card = ({ product, showViewBtn = true, trancatDescription = true }) => {
+    // why use dispatcher because the methode wo need to call it not in the same componenent ,it was in the store
+    let dispatch = useDispatch()
     const showStock = (qte) => {
         return qte > 0 ? <span className="badge badge-info">Qunatity stock : {qte}</span> : <span className="badge badge-danger">Out of stock</span>
     }
@@ -44,9 +48,7 @@ const Card = ({ product, showViewBtn = true, trancatDescription = true }) => {
                         }
                         {
                             product.quantity > 0 && (
-                                <Link to="">
-                                    <button className="btn btn-success">Add to Cart</button>
-                                </Link>
+                                <button onClick={() => dispatch(addToCart(product))} className="btn btn-success">Add to Cart</button>
                             )
                         }
                     </div>

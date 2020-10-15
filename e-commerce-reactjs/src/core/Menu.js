@@ -4,7 +4,7 @@ import { API_URL, toastrOptions } from "../config";
 import toastr from 'toastr';
 import 'toastr/build/toastr.css';
 import { isAdmin, isAuthenticated } from "../helpers/auth";
-
+import { useSelector } from 'react-redux'
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
     return { color: "#000", fontWeight: "bold" };
@@ -13,6 +13,7 @@ const isActive = (history, path) => {
   }
 };
 const Menu = (props) => {
+  let countItem = useSelector(state=>state.cart.count);
   const signout = () => {
     fetch(`${API_URL}/signout`)
       .then(() => {
@@ -22,11 +23,9 @@ const Menu = (props) => {
       })
       .catch()
   }
-
-
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-info">
+      <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-info">
         <Link className="navbar-brand" to="/">
           E-Commerce
         </Link>
@@ -55,7 +54,7 @@ const Menu = (props) => {
                   Shopping <span className="sr-only">(current)</span>
                 </Link>
               </li>
-                <li className="nav-item active">
+              <li className="nav-item active">
                 <Link
                   style={isActive(props.history, "/admin/dashboard")}
                   className="nav-link"
@@ -89,9 +88,19 @@ const Menu = (props) => {
               )}
             {
               isAuthenticated() && (
-                <li className="nav-item" style={{ cursor: 'pointer' }}>
-                  <span className="nav-link" style={isActive(props.history, "/signout")} onClick={signout}>SignOut</span>
-                </li>
+                <Fragment>
+                  <li className="nav-item" style={{ cursor: 'pointer' }}>
+                    <Link to ="/cart" style={isActive(props.history, "/cart")}>
+                     <span className="nav-link">
+                      <span><b>Cart</b></span> <span className="badge badge-warning  px-2 py-1">{countItem}</span>
+                    </span>
+                    </Link>
+                   
+                  </li>
+                  <li className="nav-item" style={{ cursor: 'pointer' }}>
+                    <span className="nav-link" style={isActive(props.history, "/signout")} onClick={signout}>SignOut</span>
+                  </li>
+                </Fragment>
               )}
 
           </ul>

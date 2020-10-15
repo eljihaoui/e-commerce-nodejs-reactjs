@@ -2,7 +2,6 @@
     font-size: 14 !important;
     font-weight: bold !important;
     color: indigo !important;
-
 }
 body{
     font-family: 'Century Gothic' !important;
@@ -23,4 +22,11 @@ button{
 }
 #FilterByCategoory ul li:hover{
     background-color:gainsboro;
+}
+table tr td {
+    font-size: 14px; 
+    /* vertical-align: top; */
+}
+.textBold{
+    font-weight:bold;
 }
