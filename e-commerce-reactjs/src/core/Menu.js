@@ -13,7 +13,7 @@ const isActive = (history, path) => {
   }
 };
 const Menu = (props) => {
-  let countItem = useSelector(state=>state.cart.count);
+  let countItem = useSelector(state => state.cart.count);
   const signout = () => {
     fetch(`${API_URL}/signout`)
       .then(() => {
@@ -63,11 +63,7 @@ const Menu = (props) => {
                   </Link>
               </li>
 
-              <li className="nav-item active">
-                <Link style={isActive(props.history, "/products")} className="nav-link" to="/products">
-                  Products <span className="sr-only">(current)</span>
-                </Link>
-              </li>
+     
 
             </Fragment>
 
@@ -75,6 +71,14 @@ const Menu = (props) => {
 
           </ul>
           <ul className="navbar-nav ml-auto">
+          <li className="nav-item" style={{ cursor: 'pointer' }}>
+                  <Link to="/cart" style={isActive(props.history, "/cart")}>
+                    <span className="nav-link">
+                      <span><b>Cart</b></span> <span className="badge badge-warning  px-2 py-1">{countItem}</span>
+                    </span>
+                  </Link>
+
+                </li>
             {
               !isAuthenticated() && (
                 <Fragment>
@@ -87,21 +91,16 @@ const Menu = (props) => {
                 </Fragment>
               )}
             {
-              isAuthenticated() && (
-                <Fragment>
+
+              <Fragment>
+          
+                 { isAuthenticated() && (
                   <li className="nav-item" style={{ cursor: 'pointer' }}>
-                    <Link to ="/cart" style={isActive(props.history, "/cart")}>
-                     <span className="nav-link">
-                      <span><b>Cart</b></span> <span className="badge badge-warning  px-2 py-1">{countItem}</span>
-                    </span>
-                    </Link>
-                   
-                  </li>
-                  <li className="nav-item" style={{ cursor: 'pointer' }}>
-                    <span className="nav-link" style={isActive(props.history, "/signout")} onClick={signout}>SignOut</span>
-                  </li>
+                  <span className="nav-link" style={isActive(props.history, "/signout")} onClick={signout}>SignOut</span>
+                </li> 
+                )}
                 </Fragment>
-              )}
+            }
 
           </ul>
         </div>

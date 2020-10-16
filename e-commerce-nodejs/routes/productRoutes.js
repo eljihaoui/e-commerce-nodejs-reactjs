@@ -41,6 +41,7 @@ router.put(
 );
 router.get("/:productId", showProduct);
 
+
 router.param("productId", productById);
 
 module.exports = router;

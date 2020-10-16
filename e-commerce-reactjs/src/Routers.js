@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AddCategory from "./components/admin/category/AddCategory";
 import AddProduct from "./components/admin/product/AddProduct";
-import Product from "./components/admin/product/Product";
 import AdminDashboard from "./components/user/AdminDashboard";
 import Dashboard from "./components/user/Dashboard";
 import Signin from "./components/user/Signin";
@@ -20,7 +19,6 @@ const Routers = () => {
       <Menu />
       <Switch>
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
-        <PrivateRoute exact path='/products' component={Product} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute exact path="/shop" component={Shop} />
 

@@ -65,3 +65,31 @@ export const relatedProduct = (id) => {
         .then(res => res.products)
         .catch(err => console.log(err))
 }
+export const getBrainTreeToken = (userId, token) => {
+    return fetch(`${API_URL}/braintree/getToken/${userId}`, {
+        method: "GET",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+        .then(res => res.json())
+}
+export const processPayment = (userId, token, paymentData) => {
+    return fetch(`${API_URL}/braintree/purchase/${userId}`, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(paymentData)
+    })
+        .then(res => res.json())
+}
+
+export const emptyCart=(callback)=>{
+localStorage.removeItem('cart');
+callback();
+}
