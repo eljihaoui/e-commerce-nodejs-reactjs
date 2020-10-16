@@ -1,4 +1,4 @@
-/e-commerce-reactjs/node_modules
-/e-commerce-nodejs/node_modules
-/e-commerce-nodejs/Docs
+/e-commerce-reactjs/node_modules/
+/e-commerce-nodejs/node_modules/
+/e-commerce-nodejs/Docs/
 /e-commerce-nodejs/.env
